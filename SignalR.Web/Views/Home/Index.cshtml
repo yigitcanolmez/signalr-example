@@ -8,44 +8,55 @@
         $(document).ready(() => {
             //bağlantı kuruldu
             var connection = new signalR.HubConnectionBuilder().configureLogging(signalR.LogLevel.Debug).withAutomaticReconnect([1000, 3000, 5000, 8000, 30000]).withUrl("https://localhost:7287/MyHub").build();
-            $("#conStatus").text(connection.state);
+            showStatus();
+            Start();
 
+            function showStatus(){
+                $("#conStatus").text(connection.state);
+            }
 
-            //bağlantı başlatıldı
+            function Start() {
+               
             connection.start().then(() => {
                 $("#loading").hide();
-                $("#conStatus").text(connection.state);
+                showStatus();
 
-            }).catch((err) => { console.log(err) });
+            }).catch((err) => { 
+                console.log(err);
+                setTimeout(() => Start(), 2000)
+            });
+            }
+            
 
-            $("#conStatus").text(connection.state);
+            showStatus();
 
 
             connection.onreconnecting(err => {
                 $("#loading").show();
-                $("#conStatus").text(connection.state);
+                showStatus();
                 console.log("onreconnection : " + err);
             })
 
             connection.onreconnected(connectionId => {
                 $("#loading").hide();
-                $("#conStatus").text(connection.state);
+                showStatus();
                 console.log("connectionId : " + connectionId);
             })
 
             connection.onclose(() => {
                 $("#loading").hide();
-                $("#conStatus").text(connection.state);
+                showStatus();
+                Start();
 
             })
 
+            connection.on("ReceiveClientCount", (clientCount) => {
+                $("#clientCount").text(clientCount);
+            })
 
-
-
-
-
-
-
+            connection.on("Notify", (countText) => {
+                $("#notify").html(`<div class = "alert alert-success">${countText} </div>`)
+            })
 
             //servera istek
             $("#btnNameSave").click(() => {
@@ -71,7 +82,8 @@
         <button class="btn btn-primary" id="btnNameSave">İsim Kaydet</button>
         <div class="alert alert-info">
             <div class="float-left">
-                Bağlantı durumu :  <strong id="conStatus"></strong>
+                Bağlantı durumu :  <strong id="conStatus"></strong>,
+                Client Sayısı : <strong id="clientCount"></strong>
             </div>
             <div class="float-right">
                 <div class="spinner-border" role="status" id="loading">
@@ -81,6 +93,8 @@
            <div class="clearfix"></div>
        </div
     </div>
+
+    <div id ="notify"></div>
     <div class="col-md-8 offset-2">
         <ul class="list-group" id="nameList"></ul>
     </div>
