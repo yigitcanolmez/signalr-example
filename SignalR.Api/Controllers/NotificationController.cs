@@ -18,6 +18,8 @@ namespace SignalR.Api.Controllers
         [HttpGet("{teamCount}")]
         public async Task<IActionResult> SetTeamCount(int teamCount)
         {
+            MyHub.TeamCount = teamCount;
+
             await _hubContext.Clients.All.SendAsync("Notify", $"Arkadaşlar takım {teamCount} kişilik olacaktır.");
             return Ok();
         }

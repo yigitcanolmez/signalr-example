@@ -58,6 +58,10 @@
                 $("#notify").html(`<div class = "alert alert-success">${countText} </div>`)
             })
 
+            connection.on("Error", (errorText) =>{
+                alert(errorText);
+            })
+
             //servera istek
             $("#btnNameSave").click(() => {
 
@@ -80,7 +84,7 @@
         <input class="form-control" type="text" id="txtName" />
         <hr />
         <button class="btn btn-primary" id="btnNameSave">İsim Kaydet</button>
-        <div class="alert alert-info">
+        <div class="alert alert-info"> 
             <div class="float-left">
                 Bağlantı durumu :  <strong id="conStatus"></strong>,
                 Client Sayısı : <strong id="clientCount"></strong>
