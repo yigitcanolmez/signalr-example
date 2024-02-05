@@ -21,15 +21,19 @@
                 $("#loading").hide();
                 showStatus();
 
+
+                connection.invoke("GetNames");
+
+
             }).catch((err) => { 
                 console.log(err);
                 setTimeout(() => Start(), 2000)
             });
+
+
             }
-            
 
             showStatus();
-
 
             connection.onreconnecting(err => {
                 $("#loading").show();
@@ -59,8 +63,19 @@
             })
 
             connection.on("Error", (errorText) =>{
-                alert(errorText);
+                alert(errorText)
             })
+
+            connection.on("ReceiveNames", (names)=>{
+                
+                $("#nameList").empty();
+
+                names.forEach((item, index) => {
+                    $("#nameList").append(`<li class="list-group-item">${item}</li>`)
+                })
+
+            })
+
 
             //servera istek
             $("#btnNameSave").click(() => {

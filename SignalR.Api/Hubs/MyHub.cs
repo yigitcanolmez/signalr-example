@@ -25,7 +25,7 @@ namespace SignalR.Api.Hubs
             }
 
         }
-        public async Task ReceiveName()
+        public async Task GetNames()
         {
             await Clients.All.SendAsync("ReceiveNames", names);
         }
