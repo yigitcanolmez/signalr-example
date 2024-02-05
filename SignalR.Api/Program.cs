@@ -1,6 +1,13 @@
+using Microsoft.EntityFrameworkCore;
 using SignalR.Api.Hubs;
+using SignalR.Api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<AppDbContext>(opt =>
+{
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon"));
+});
 
 // Add services to the container.
 builder.Services.AddCors(opt =>
