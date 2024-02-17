@@ -55,7 +55,7 @@ namespace SignalR.Api.Hubs
                     Name = name
                 });
             }
-            else
+            else if (teamName != "undefined" || team != null)
             {
                 var newTeam = new Team
                 {
@@ -70,7 +70,7 @@ namespace SignalR.Api.Hubs
             }
             await _appDbContext.SaveChangesAsync();
 
-            await Clients.Group(teamName).SendAsync("ReceiveMessageByGroup", name, teamName);
+            await Clients.Group(teamName).SendAsync("ReceiveMessageByGroup", name, team.Id);
 
         }
 
@@ -78,9 +78,9 @@ namespace SignalR.Api.Hubs
         {
             var teams = _appDbContext.Teams.Include(x => x.Users).Select(y => new
             {
-                teamName = y.Name,
+                teamId = y.Id,
                 users = y.Users.ToList(),
-            });
+            }).ToList();
 
             await Clients.All.SendAsync("ReceiveNamesByGroup", teams);
         }

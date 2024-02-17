@@ -11,24 +11,25 @@
             showStatus();
             Start();
 
-            function showStatus(){
+            function showStatus() {
                 $("#conStatus").text(connection.state);
             }
 
             function Start() {
-               
-            connection.start().then(() => {
-                $("#loading").hide();
-                showStatus();
+
+                connection.start().then(() => {
+                    $("#loading").hide();
+                    showStatus();
 
 
-                connection.invoke("GetNames");
+                    // connection.invoke("GetNames");
 
+                    connection.invoke("GetNamesByGroup");
 
-            }).catch((err) => { 
-                console.log(err);
-                setTimeout(() => Start(), 2000)
-            });
+                }).catch((err) => {
+                    console.log(err);
+                    setTimeout(() => Start(), 2000)
+                });
 
 
             }
@@ -62,12 +63,12 @@
                 $("#notify").html(`<div class = "alert alert-success">${countText} </div>`)
             })
 
-            connection.on("Error", (errorText) =>{
+            connection.on("Error", (errorText) => {
                 alert(errorText)
             })
 
-            connection.on("ReceiveNames", (names)=>{
-                
+            connection.on("ReceiveNames", (names) => {
+
                 $("#nameList").empty();
 
                 names.forEach((item, index) => {
@@ -76,18 +77,76 @@
 
             })
 
+            connection.on("ReceiveName", (name) => {
+                $("#nameList").append(`<li class = "list-group-item" >${name}</li>`)
+            })
 
-            //servera istek
+            connection.on("ReceiveMessageByGroup", (name, teamId) => {
+
+                let teamName
+                if (teamId == 1)
+                    teamName = "ATeamList";
+                else if (teamId == 2)
+                    teamName = "BTeamList";
+
+                $(`#${teamName}`).append(`<li class="list-group-item">${name}</li>`)
+
+            })
+
+            connection.on("ReceiveNamesByGroup", (teams) => {
+                teams.forEach((teamId, index) => {
+                    let teamName
+                    console.log(teamId)
+                    if (teamId.teamId == 1)
+                        teamName = "ATeamList";
+                    else if (teamId.teamId == 2)
+                        teamName = "BTeamList";
+
+                    teamId.users.forEach((user, index2) => {
+                        $(`#${teamName}`).append(`<li class="list-group-item">${user.name}</li>`)
+
+                    })
+
+                })
+
+            })
+
+
+
             $("#btnNameSave").click(() => {
 
                 connection.invoke("SendName", $("#txtName").val()).catch((err) => { console.log(err) })
             })
+            $("#btnNameTeam").click(() => {
+
+                let name = $("#txtName").val()
+
+                let teamName = $("input[type=radio]:checked").val();
+
+                console.log(name + teamName);
+
+                connection.invoke("SendNameByGroup", name, teamName).catch((err) => {
+                    console.log(err);
+                })
 
 
-            //serverda olan metota bağlanıldı.
-            connection.on("ReceiveName", (name) => {
-                $("#nameList").append(`<li class = "list-group-item" >${name}</li>`)
             })
+            $("input[type=radio]").change(() => {
+                let value = $(`input[type=radio]:checked`).val();
+
+                if (value == "Fenerbahçe Spor Kulübü") {
+                    connection.invoke("AddToGroup", value);
+                    connection.invoke("RemoveFromGroup", "Real Madrid");
+
+                }
+                else if (value == "Real Madrid") {
+                    connection.invoke("AddToGroup", value);
+                    connection.invoke("RemoveFromGroup", "Fenerbahçe Spor Kulübü");
+                }
+
+            })
+
+
 
         });
 
@@ -99,7 +158,8 @@
         <input class="form-control" type="text" id="txtName" />
         <hr />
         <button class="btn btn-primary" id="btnNameSave">İsim Kaydet</button>
-        <div class="alert alert-info"> 
+        <button class="btn btn-warning" id="btnNameTeam">İsim Kaydet(Takım)</button>
+        <div class="alert alert-info mt-2">
             <div class="float-left">
                 Bağlantı durumu :  <strong id="conStatus"></strong>,
                 Client Sayısı : <strong id="clientCount"></strong>
@@ -108,13 +168,36 @@
                 <div class="spinner-border" role="status" id="loading">
                     <span class="visually-hidden">Loading...</span>
                 </div>
-           </div>
-           <div class="clearfix"></div>
-       </div
-    </div>
+            </div>
+            <div class="clearfix"></div>
 
-    <div id ="notify"></div>
-    <div class="col-md-8 offset-2">
-        <ul class="list-group" id="nameList"></ul>
+
+        </div>
+        <div id="notify"></div>
     </div>
 </div>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="TeamGroup" value="Fenerbahçe Spor Kulübü" required />
+            <label class="form-check-label">Fenerbahçe Spor Kulübü</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="TeamGroup" value="Real Madrid" required />
+            <label class="form-check-label">Real Madrid</label>
+        </div>
+    </div>
+
+
+    <div class="col-md-8 offset-2">
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-group" id="ATeamList"></ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-group" id="BTeamList"></ul>
+            </div>
+        </div>
+        <ul class="list-group" id="nameList"></ul>
+
+    </div>
