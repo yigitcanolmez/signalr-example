@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalR.Api", "SignalR.Api\SignalR.Api.csproj", "{B2FBCA75-1A86-4633-A6D3-987425F26A05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalR.Api", "SignalR.Api\SignalR.Api.csproj", "{B2FBCA75-1A86-4633-A6D3-987425F26A05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalR.Web", "SignalR.Web\SignalR.Web.csproj", "{AD92E01D-5302-4372-A320-60AC4B0BF326}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SignalR.Web", "SignalR.Web\SignalR.Web.csproj", "{AD92E01D-5302-4372-A320-60AC4B0BF326}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "First Section", "First Section", "{8B942517-1358-41C1-B2D2-67C26A569DC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Covid 19 Chart Section", "Covid 19 Chart Section", "{30BF1CD0-EB0E-400B-80AC-A29797ED3A7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidChart.API", "CovidChart.API\CovidChart.API.csproj", "{6A118F01-25F4-4846-9264-5509EED0E5B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +27,18 @@ Global
 		{AD92E01D-5302-4372-A320-60AC4B0BF326}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD92E01D-5302-4372-A320-60AC4B0BF326}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AD92E01D-5302-4372-A320-60AC4B0BF326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A118F01-25F4-4846-9264-5509EED0E5B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A118F01-25F4-4846-9264-5509EED0E5B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A118F01-25F4-4846-9264-5509EED0E5B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A118F01-25F4-4846-9264-5509EED0E5B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B2FBCA75-1A86-4633-A6D3-987425F26A05} = {8B942517-1358-41C1-B2D2-67C26A569DC6}
+		{AD92E01D-5302-4372-A320-60AC4B0BF326} = {8B942517-1358-41C1-B2D2-67C26A569DC6}
+		{6A118F01-25F4-4846-9264-5509EED0E5B3} = {30BF1CD0-EB0E-400B-80AC-A29797ED3A7E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9EF54DFE-95AC-49DA-9466-60564DD1CA01}
