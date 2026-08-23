@@ -96,49 +96,9 @@ Bu proje aşağıdaki SignalR özelliklerini göstermektedir:
 - **Veri İletişimi:** WebSocket (SignalR ile)
 - **API:** REST API (CovidChart.API)
 
-## 📝 API Endpoints
-
-### CovidChart.API
-- `GET /api/covid/data` - COVID-19 verilerini döner
-
-### SignalR.Api
-- SignalR Hub URL: `/covidHub`
-- Server Method: `SendCovidData` - İstemcilere veri gönderir
-
-## 🔐 Güvenlik
-
-- HTTPS kullanılarak iletişim sağlanır
-- CORS politikası uygun şekilde yapılandırılmıştır
-
-## 🐛 Bilinen Sorunlar
-
-Bilinen bir sorun yoktur. Sorunla karşılaşırsanız lütfen [Issues](https://github.com/yigitcanolmez/signalr-example/issues) sekmesinde bildirin.
-
 ## 📚 Kaynaklar
 
 - [ASP.NET Core SignalR Resmi Belgeleri](https://learn.microsoft.com/en-us/aspnet/core/signalr/)
 - [SignalR Hub'lar](https://learn.microsoft.com/en-us/aspnet/core/signalr/hubs)
 - [JavaScript istemcisi](https://learn.microsoft.com/en-us/aspnet/core/signalr/javascript-client)
 
-## 👤 Yazar
-
-**Yiğit Can Ölmez**
-- GitHub: [@yigitcanolmez](https://github.com/yigitcanolmez)
-
-## 📄 Lisans
-
-Bu proje açık kaynak olarak paylaşılmıştır.
-
-## 🤝 Katkıda Bulunma
-
-Katkılarınız hoş geldiniz! Lütfen:
-
-1. Fork edin
-2. Feature branch'i oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add some amazing feature'`)
-4. Push edin (`git push origin feature/amazing-feature`)
-5. Pull Request açın
-
----
-
-**Son Güncelleme:** 2026-08-23
